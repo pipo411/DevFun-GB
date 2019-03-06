@@ -1,3 +1,4 @@
+
 from PyQt5.QtWidgets import QMainWindow, QMenu, QWidget, QFormLayout, QLabel, QLineEdit
 
 
@@ -32,3 +33,4 @@ class View(QMainWindow):
     def __getProductView(self):
         proView = ProductView()
         return proView
+
