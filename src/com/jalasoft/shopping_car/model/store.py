@@ -1,19 +1,32 @@
+from com.jalasoft.shopping_car.model.item_2 import Item2
+
+
 class Store:
 
     def __init__(self):
-        self.store_stock = []
+        self.store_stock = {}
 
-    def add_item(self, item):
-        self.store_stock.append(item)
+    def add_item(self, id, item, quantity=1):
+        if not id in self.store_stock.keys():
+            self.store_stock[id] = item
+        else:
+            item.update_quantity(quantity)
 
-    def remove_item(self, item):
-        self.store_stock.remove(item)
+    def update_item_stock(self, id, quantity=1):
+        if self.store_stock[id].get_quantity() <= 1:
+            self.store_stock.pop(id)
+        else:
+            self.store_stock[id].decrease_quantity(quantity)
 
-    def update_item(self, actual_item, new_item):
-        self.store_stock[actual_item] = new_item
+    def edit_item(self, id, name, price):
+        self.store_stock[id].set_name(name)
+        self.store_stock[id].set_price(price)
 
     def get_items(self):
-        return self.store_stock
+        items_stock = {}
+        for id, item in self.store_stock.items():
+            items_stock[id] = item.get_item_detail()
+        return items_stock
 
-    def get_item(self, item):
-        return self.store_stock[item]
+    def get_item(self, id):
+        return self.store_stock[id].get_item_detail()
