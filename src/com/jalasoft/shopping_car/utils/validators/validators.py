@@ -3,7 +3,7 @@ import time
 
 from pip._vendor.distlib.compat import raw_input
 
-
+# Read if is intiger
 def read_int():
     while True:
         entry = raw_input("Write a whole number: ")
@@ -14,7 +14,7 @@ def read_int():
         print
         "The entry is incorrect: write a whole number"
 
-
+# validate if data is integer
 def is_int(var):
     try:
         int(var)
@@ -27,7 +27,7 @@ datos = ["123", "asd", "eeee", "----", "-5", ""]
 for data in datos:
     print("¿'{}' it is a integer? {}".format(data, is_int(data)))
 
-
+# validate if data is float
 def is_float(var):
     try:
         float(var)
@@ -35,11 +35,9 @@ def is_float(var):
     except:
         return False
 
-
 datos = ["123", "asd", "eeee", "----", "-5", "1.60"]
 for data in datos:
     print("¿'{}' is a float? {}".format(data, is_float(data)))
-
 
 # has exactly a point
 def has_exactly_a_point(num):
@@ -73,7 +71,7 @@ for data in pruebas:
             return value.strftime(str(self.format))
 
         # Validating that the user enters an integer
-        def lee_entero(self):
+        def read_entero(self):
             while True:
                 input = raw_input("Write a whole number : ")
             try:
