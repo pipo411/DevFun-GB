@@ -1,7 +1,9 @@
 class Item:
 
     def __init__(self, name, price):
-        self.item = {"name": name, "price": price, "quantity": 1}
+        self.item = {"name": name,
+                     "price": price,
+                     "quantity": 0}
 
     def get_name(self):
         return self.item["name"]
