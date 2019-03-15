@@ -21,6 +21,10 @@ class DatabaseConnection:
                                               PRICE REAL,
                                               QUANTITY INTEGER
                                         )""")
+                cursor.execute("""CREATE TABLE IF NOT EXISTS venta (
+                                                              ID INTEGER primary key AUTOINCREMENT,
+                                                              DESCRIPTION TEXT
+                                                        )""")
             except sqlite3.OperationalError:
                 print("the db exists")
         return connection
