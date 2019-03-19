@@ -1,30 +1,37 @@
 class Item:
 
-    def __init__(self, name, price, quantity=0):
-        self.__item = {"name": name,
-                       "price": price,
-                       "quantity": quantity}
+    def __init__(self, name="", price=0, quantity=0):
+        self.__id = 0
+        self.__name = name
+        self.__price = price
+        self.__quantity = quantity
 
     def get_name(self):
-        return self.__item["name"]
+        return self.__name
 
     def get_price(self):
-        return self.__item["price"]
+        return self.__price
 
     def get_quantity(self):
-        return self.__item["quantity"]
+        return self.__quantity
+
+    def get_id(self):
+        return self.__id
+
+    def set_id(self, id):
+        self.__id = id
 
     def set_name(self, name):
-        self.__item["name"] = name
+        self.__name = name
 
     def set_price(self, price):
-        self.__item["price"] = price
+        self.__price = price
+
+    def set_quantity(self, quantity):
+        self.__quantity = quantity
 
     def update_quantity(self, quantity):
-        self.__item["quantity"] += quantity
+        self.__quantity += quantity
 
     def decrease_quantity(self, quantity):
-        self.__item["quantity"] -= quantity if self.get_quantity() >= quantity else self.get_quantity()
-
-    def get_item_detail(self):
-        return self.__item
+        self.__quantity -= quantity if self.get_quantity() >= quantity else self.get_quantity()
