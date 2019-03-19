@@ -29,9 +29,3 @@ class Item:
 
     def set_quantity(self, quantity):
         self.__quantity = quantity
-
-    def update_quantity(self, quantity):
-        self.__quantity += quantity
-
-    def decrease_quantity(self, quantity):
-        self.__quantity -= quantity if self.get_quantity() >= quantity else self.get_quantity()
