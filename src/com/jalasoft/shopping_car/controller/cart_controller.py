@@ -19,7 +19,7 @@ class CartController:
             self.centralWidget.getSaveProductButton().clicked.connect(lambda: self.saveProduct())
         if isinstance(self.centralWidget, ProductShowView):
             self.centralWidget.getAddTocartButton().clicked.connect(lambda: self.addToCart())
-            # self.centralWidget.getBuyButton().clicked().connect(lambda: self.buyItems())
+            self.centralWidget.getBuyButton().clicked.connect(lambda: self.buyItems())
 
     def saveProduct(self):
         pro = Item()
@@ -51,6 +51,7 @@ class CartController:
         pro.set_id(id)
         pro.set_name(name)
         pro.set_price(price)
+        pro.set_quantity(1)
         self.cartList[pro.get_name()] = pro
         self.loadCartTable()
 
