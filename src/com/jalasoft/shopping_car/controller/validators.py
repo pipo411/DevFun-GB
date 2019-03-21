@@ -24,7 +24,7 @@ class Dialogo(QDialog):
             self.nombre.setStyleSheet("border: 1px solid green;")
             return True
 
-   
+
     def validar_formulario(self):
         if self.validar_nombre() and self.validar_email():
             QMessageBox.information(self, "Formulario correcto", "Validación correcta", QMessageBox.Discard)
