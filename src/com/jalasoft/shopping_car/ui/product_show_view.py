@@ -1,6 +1,9 @@
 from PyQt5.QtWidgets import QWidget, QFormLayout, QLineEdit, QLabel, QVBoxLayout, QGroupBox, QPushButton, QComboBox, \
     QTableWidget, QTableWidgetItem, QAbstractItemView
 
+from src.com.jalasoft.shopping_car.ui.button_template import ButtonTemplate
+from src.com.jalasoft.shopping_car.ui.table_template import TableTemplate
+
 
 class ProductShowView(QWidget):
     def __init__(self):
@@ -13,18 +16,15 @@ class ProductShowView(QWidget):
     def initComponent(self):
         vLayout = QVBoxLayout()
 
-        self.table = QTableWidget(self)
-        self.table.setColumnCount(4)
-        self.table.setHorizontalHeaderLabels(["ID", "Product Name", "Price", "Quantity"])
+        self.table = TableTemplate(["ID", "Product Name", "Price", "Quantity"], "Steelblue")
         self.table.setSelectionBehavior(QAbstractItemView.SelectRows)
         self.table.setSelectionMode(QAbstractItemView.SingleSelection)
 
-        self.addButton = QPushButton("Add to Cart", self)
-        self.addBuyButton = QPushButton("Buy Items", self)
+        self.addButton = ButtonTemplate("Add to Cart", """palegoldenrod""")
+        #self.addBuyButton = QPushButton("Buy Items", self)
+        self.addBuyButton = ButtonTemplate("Buy Items", """Limegreen""")
 
-        self.cartTable = QTableWidget(self)
-        self.cartTable.setColumnCount(4)
-        self.cartTable.setHorizontalHeaderLabels(["ID", "Product Name", "Price", "Quantity"])
+        self.cartTable = TableTemplate(["ID", "Product Name", "Price", "Quantity"], "Forestgreen")
 
         vLayout.addWidget(self.table)
         vLayout.addWidget(self.addButton)
