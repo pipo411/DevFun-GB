@@ -5,6 +5,7 @@ from src.com.jalasoft.shopping_car.ui.product_insert_view import ProductInsertVi
 from src.com.jalasoft.shopping_car.ui.product_show_view import ProductShowView
 
 
+
 class CartController:
 
     def __init__(self, mainView, cartModel):
@@ -44,16 +45,23 @@ class CartController:
     def addToCart(self):
         indexes = self.centralWidget.getTable().selectionModel().selectedIndexes()
         id = indexes[0].sibling(indexes[0].row(), indexes[0].column()).data();
-        name = indexes[1].sibling(indexes[1].row(), indexes[1].column()).data();
-        price = indexes[2].sibling(indexes[2].row(), indexes[2].column()).data();
-        # create product and add to cart
-        pro = Item()
-        pro.set_id(id)
-        pro.set_name(name)
-        pro.set_price(price)
-        pro.set_quantity(1)
-        self.cartList[pro.get_name()] = pro
-        self.loadCartTable()
+        if not self.isProductInList(id):
+            name = indexes[1].sibling(indexes[1].row(), indexes[1].column()).data();
+            price = indexes[2].sibling(indexes[2].row(), indexes[2].column()).data();
+            # create product and add to cart
+            pro = Item()
+            pro.set_id(id)
+            pro.set_name(name)
+            pro.set_price(price)
+            pro.set_quantity(1)
+            self.cartList[pro.get_name()] = pro
+            self.loadCartTable()
+
+    def isProductInList(self, id):
+        for prod in self.cartList:
+            if id == prod.get_id():
+                return True
+        return False
 
     def loadCartTable(self):
         listSize = len(self.cartList)
