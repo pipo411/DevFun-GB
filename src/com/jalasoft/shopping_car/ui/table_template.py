@@ -15,4 +15,4 @@ class TableTemplate(QTableWidget):
         self.format.setSectionResizeMode(0, QtWidgets.QHeaderView.Stretch)
         self.format.setSectionResizeMode(1, QtWidgets.QHeaderView.Stretch)
         self.format.setSectionResizeMode(2, QtWidgets.QHeaderView.Stretch)
-        self.format.setSectionResizeMode(2, QtWidgets.QHeaderView.Stretch)
+        self.format.setSectionResizeMode(3, QtWidgets.QHeaderView.Stretch)

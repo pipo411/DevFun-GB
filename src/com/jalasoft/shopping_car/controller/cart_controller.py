@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QTableWidgetItem, QLineEdit
+from PyQt5.QtWidgets import QTableWidgetItem, QLineEdit, QComboBox
 
 from src.com.jalasoft.shopping_car.model.item import Item
 from src.com.jalasoft.shopping_car.ui.product_insert_view import ProductInsertView
@@ -6,7 +6,6 @@ from src.com.jalasoft.shopping_car.ui.product_show_view import ProductShowView
 
 
 class CartController:
-
     def __init__(self, mainView, cartModel):
         self.mainView = mainView
         self.cartModel = cartModel
@@ -30,11 +29,11 @@ class CartController:
 
     def loadProduct(self):
         self.centralWidget = self.mainView.centralWidget()
-        listProduct = self.cartModel.get_items()
-        listSize = len(listProduct)
+        self.listProduct = self.cartModel.get_items()
+        listSize = len(self.listProduct)
         self.centralWidget.getTable().setRowCount(listSize)
         index = 0
-        for _, item in listProduct.items():
+        for _, item in self.listProduct.items():
             self.centralWidget.getTable().setItem(index, 0, QTableWidgetItem(str(item.get_id())))
             self.centralWidget.getTable().setItem(index, 1, QTableWidgetItem(item.get_name()))
             self.centralWidget.getTable().setItem(index, 2, QTableWidgetItem(str(item.get_price())))
@@ -51,7 +50,6 @@ class CartController:
         pro.set_id(id)
         pro.set_name(name)
         pro.set_price(price)
-        pro.set_quantity(1)
         self.cartList[pro.get_name()] = pro
         self.loadCartTable()
 
@@ -60,18 +58,21 @@ class CartController:
         self.centralWidget.getCartTable().setRowCount(listSize)
         index = 0
         for _, prod in self.cartList.items():
-            quantity = QLineEdit()
+            self.quantity = QComboBox()
+            count = self.listProduct[prod.get_name()].get_quantity()
+            for i in range(1, count + 1):
+                self.quantity.addItem(str(i))
             self.centralWidget.getCartTable().setItem(index, 0, QTableWidgetItem(str(prod.get_id())))
             self.centralWidget.getCartTable().setItem(index, 1, QTableWidgetItem(prod.get_name()))
             self.centralWidget.getCartTable().setItem(index, 2, QTableWidgetItem(str(prod.get_price())))
-            self.centralWidget.getCartTable().setCellWidget(index, 3, quantity)
+            self.centralWidget.getCartTable().setCellWidget(index, 3, self.quantity)
             index = index + 1
 
     def buyItems(self):
         index = 0
         while self.centralWidget.getCartTable().rowCount() > index:
             item_name = self.centralWidget.getCartTable().takeItem(index, 1).text()
-            item_quantity = self.centralWidget.getCartTable().cellWidget(index, 3).text()
+            item_quantity = self.centralWidget.getCartTable().cellWidget(index, 3).currentText()
             self.cartList[item_name].set_quantity(int(item_quantity))
             index += 1
         self.cartModel.buy(self.cartList)

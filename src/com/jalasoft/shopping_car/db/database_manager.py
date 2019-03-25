@@ -27,7 +27,7 @@ class DatabaseManager:
 
     def get_items_as_dictionary(self):
         cursor = self.db_connection.cursor()
-        items = cursor.execute("select ID,NAME,PRICE,QUANTITY from items")
+        items = cursor.execute("select ID,NAME,PRICE,QUANTITY from items WHERE QUANTITY  > 0")
         dict_of_items = {}
 
         for row in items:

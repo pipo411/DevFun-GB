@@ -24,7 +24,7 @@ class ProductShowView(QWidget):
         # self.addBuyButton = QPushButton("Buy Items", self)
         self.addBuyButton = ButtonTemplate("Buy Items", """Limegreen""")
 
-        self.cartTable = TableTemplate(["ID", "Product Name", "Price", "Quantity"], "Forestgreen")
+        self.cartTable = TableTemplate(["ID", "Product Name", "Unit Price", "Total Price", "Quantity"], "Forestgreen")
 
         vLayout.addWidget(self.table)
         vLayout.addWidget(self.addButton)
