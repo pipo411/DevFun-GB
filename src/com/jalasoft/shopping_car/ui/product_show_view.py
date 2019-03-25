@@ -21,7 +21,7 @@ class ProductShowView(QWidget):
         self.table.setSelectionMode(QAbstractItemView.SingleSelection)
 
         self.addButton = ButtonTemplate("Add to Cart", """palegoldenrod""")
-        #self.addBuyButton = QPushButton("Buy Items", self)
+        # self.addBuyButton = QPushButton("Buy Items", self)
         self.addBuyButton = ButtonTemplate("Buy Items", """Limegreen""")
 
         self.cartTable = TableTemplate(["ID", "Product Name", "Price", "Quantity"], "Forestgreen")

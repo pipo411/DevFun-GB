@@ -1,13 +1,19 @@
 from src.com.jalasoft.shopping_car.db.database_manager import DatabaseManager
+import logging
+
+LOG = logging.getLogger()
 
 
 class Store:
     db_manager = DatabaseManager()
 
     def __init__(self):
+        LOG.info('Enter on Store constructor')
         self.store_stock = self.db_manager.get_items_as_dictionary()
 
     def add_item(self, item):
+        LOG.info('Add Product')
+        LOG.info(item.get_name(), item.get_price(), item.get_quantity())
         if not item.get_name() in self.store_stock:
             self.db_manager.insert_element(item)
         else:

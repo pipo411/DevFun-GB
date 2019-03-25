@@ -24,8 +24,8 @@ class CartController:
     def saveProduct(self):
         pro = Item()
         pro.set_name(self.centralWidget.getName())
-        pro.set_price(self.centralWidget.getPrice())
-        pro.set_quantity(self.centralWidget.getQuantity())
+        pro.set_price(float(self.centralWidget.getPrice()))
+        pro.set_quantity(int(self.centralWidget.getQuantity()))
         self.cartModel.add_item(pro)
 
     def loadProduct(self):
@@ -66,8 +66,13 @@ class CartController:
             self.centralWidget.getCartTable().setItem(index, 2, QTableWidgetItem(str(prod.get_price())))
             self.centralWidget.getCartTable().setCellWidget(index, 3, quantity)
             index = index + 1
-        if listSize > 4:
-            self.cartModel.buy(self.cartList)
 
     def buyItems(self):
+        index = 0
+        while self.centralWidget.getCartTable().rowCount() > index:
+            item_name = self.centralWidget.getCartTable().takeItem(index, 1).text()
+            item_quantity = self.centralWidget.getCartTable().cellWidget(index, 3).text()
+            self.cartList[item_name].set_quantity(int(item_quantity))
+            index += 1
         self.cartModel.buy(self.cartList)
+        self.cartList = {}

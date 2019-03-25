@@ -1,5 +1,9 @@
+import logging
+
 from src.com.jalasoft.shopping_car.db.database_connection import DatabaseConnection
 from src.com.jalasoft.shopping_car.model.item import Item
+
+LOG = logging.getLogger()
 
 
 class DatabaseManager:
@@ -9,10 +13,12 @@ class DatabaseManager:
         self.db_connection = self.db
 
     def insert_element(self, item):
-        print("Insert ",item.get_name())
+        LOG.info("Insert Item")
+        LOG.info(item.get_name())
         self.db_connection.execute("INSERT into items (NAME,PRICE,QUANTITY) values (?,?,?)",
                                    (item.get_name(), item.get_price(), item.get_quantity()))
         self.db_connection.commit()
+        LOG.info("Complete insert item")
 
     def update_quantity_field(self, quantity, id):
         self.db_connection.execute("""UPDATE items SET QUANTITY = ? WHERE  ID = ?""",

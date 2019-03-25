@@ -5,7 +5,7 @@ class ButtonTemplate(QPushButton):
     def __init__(self, name, color):
         super().__init__()
         stl = """QPushButton {
-            background-color: """+color+""";
+            background-color: """ + color + """;
             border-width: 2px;
             border-color: darkkhaki;
             border-style: solid;
@@ -19,5 +19,5 @@ class ButtonTemplate(QPushButton):
         self.setStyleSheet(stl)
         self.accessibleName()
 
-#CSS revisar over
-#https://www.yourhtmlsource.com/stylesheets/namedcolours.html
+        # CSS revisar over
+# https://www.yourhtmlsource.com/stylesheets/namedcolours.html
