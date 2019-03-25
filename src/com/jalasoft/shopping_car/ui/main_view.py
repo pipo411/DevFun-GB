@@ -12,23 +12,31 @@ class MainView(QMainWindow):
     def initUI(self, controller):
         self.__controller = controller
         self.setWindowTitle("Test")
+        self.resize(1000, 600)
         self.initComponent()
         self.show()
 
     def initComponent(self):
+        self.loadProductInsertView()
         menuBar = self.menuBar()
         prodOption = menuBar.addMenu("Register")
 
         productMenu = QMenu("Product", self)
         prodOption.addMenu(productMenu)
 
-        insertOption = QAction("Insert", self)
-        productMenu.addAction(insertOption)
+        # insertOption = QAction("Insert", self)
+        # productMenu.addAction(insertOption)
+
         showOption = QAction("Show", self)
         productMenu.addAction(showOption)
 
-        insertOption.triggered.connect(lambda: self.loadProductInsertView())
+        # insertOption.triggered.connect(lambda: )
         showOption.triggered.connect(lambda: self.loadProductShowView())
+
+        story = menuBar.addMenu("Historial")
+        storyMenu = QAction("Show hitorial", self)
+        story.addAction(storyMenu)
+        storyMenu.triggered.connect(lambda: self.loadHistorialView())
 
     def loadProductInsertView(self):
         self.setCentralWidget(ProductInsertView())
@@ -39,3 +47,8 @@ class MainView(QMainWindow):
         self.__controller.loadProduct()
         self.__controller.addActionListener()
 
+    def loadHistorialView(self):
+        pass
+        # self.setCentralWidget(HistoryShowView())
+        # self.__controller.loadHistory()
+        # self.__controller.addActionListener()

@@ -1,5 +1,7 @@
 from PyQt5.QtWidgets import QWidget, QFormLayout, QLineEdit, QLabel, QVBoxLayout, QGroupBox, QPushButton
 
+from src.com.jalasoft.shopping_car.ui.button_template import ButtonTemplate
+
 
 class ProductInsertView(QWidget):
     def __init__(self):
@@ -8,18 +10,29 @@ class ProductInsertView(QWidget):
 
     def initUI(self):
         vLayout = QVBoxLayout()
+        lblProduct = QLabel("Insert New Product")
+        lblName = QLabel("Name: ")
+        self.name = QLineEdit()
+        self.name.setPlaceholderText("Set the product name")
+
+        lblPrice = QLabel("Price: ")
+        self.price = QLineEdit()
+        self.price.setPlaceholderText("Set the product price")
+
+        lblQuantity = QLabel("Quantity: ")
+        self.quantity = QLineEdit()
+        self.quantity.setPlaceholderText("Set the product Quantity")
 
         group = QGroupBox()
         form = QFormLayout()
-        self.name = QLineEdit()
-        self.price = QLineEdit()
-        self.quantity = QLineEdit()
-        form.addRow(QLabel("Product Name:"), self.name)
-        form.addRow(QLabel("Produt Price:"), self.price)
-        form.addRow(QLabel("Product Quantity"), self.quantity)
+
+        form.addRow(lblProduct)
+        form.addRow(lblName, self.name)
+        form.addRow(lblPrice, self.price)
+        form.addRow(lblQuantity, self.quantity)
         group.setLayout(form)
 
-        self.saveButton = QPushButton("Save Product", self)
+        self.saveButton = ButtonTemplate("Save Product", "palegoldenrod")
 
         vLayout.addWidget(group)
         vLayout.addWidget(self.saveButton)
