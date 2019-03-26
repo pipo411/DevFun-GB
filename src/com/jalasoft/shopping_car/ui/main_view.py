@@ -17,20 +17,30 @@ class MainView(QMainWindow):
         self.show()
 
     def initComponent(self):
-        self.loadProductInsertView()
         menuBar = self.menuBar()
-        prodOption = menuBar.addMenu("Register")
+        prodOption = menuBar.addMenu("Product")
 
-        productMenu = QMenu("Product", self)
-        prodOption.addMenu(productMenu)
+        insertMenu = QAction("Insert", self)
+        editMenu = QAction("Edit", self)
+        deleteMenu = QAction("Delete", self)
+        prodOption.addAction(insertMenu)
+        prodOption.addAction(editMenu)
+        prodOption.addAction(deleteMenu)
+
+        # productMenu = QMenu("Product", self)
+        # prodOption.addMenu(productMenu)
 
         # insertOption = QAction("Insert", self)
-        # productMenu.addAction(insertOption)
-
+        # prodOption.addAction(insertOption)
+        #
         showOption = QAction("Show", self)
-        productMenu.addAction(showOption)
+        # prodOption.addAction(showOption)
 
         # insertOption.triggered.connect(lambda: )
+        insertMenu.triggered.connect(lambda: self.loadProductInsertView())
+        editMenu.triggered.connect(lambda: self.loadProductEditView())
+        deleteMenu.triggered.connect(lambda: self.loadProductDeleteView())
+
         showOption.triggered.connect(lambda: self.loadProductShowView())
 
         story = menuBar.addMenu("Historial")
@@ -39,7 +49,15 @@ class MainView(QMainWindow):
         storyMenu.triggered.connect(lambda: self.loadHistorialView())
 
     def loadProductInsertView(self):
-        self.setCentralWidget(ProductInsertView())
+        self.setCentralWidget(ProductInsertView("insert"))
+        self.__controller.addActionListener()
+
+    def loadProductEditView(self):
+        self.setCentralWidget(ProductInsertView("edit"))
+        self.__controller.addActionListener()
+
+    def loadProductDeleteView(self):
+        self.setCentralWidget(ProductInsertView("delete"))
         self.__controller.addActionListener()
 
     def loadProductShowView(self):
