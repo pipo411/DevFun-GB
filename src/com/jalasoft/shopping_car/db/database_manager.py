@@ -5,6 +5,8 @@ from src.com.jalasoft.shopping_car.model.item import Item
 
 LOG = logging.getLogger()
 
+time = "8/05/93"
+
 
 class DatabaseManager:
     db = DatabaseConnection().get_database()
@@ -25,6 +27,15 @@ class DatabaseManager:
                                    (quantity, id))
         self.db_connection.commit()
 
+    def update_item_description(self, id, name=None, price=None):
+        if name is not None:
+            self.db_connection.execute("""UPDATE items SET NAME = ? WHERE  ID = ?""",
+                                   (name, id))
+        if price is not None:
+            self.db_connection.execute("""UPDATE items SET PRICE = ? WHERE  ID = ?""",
+                                       (price, id))
+        self.db_connection.commit()
+
     def get_items_as_dictionary(self):
         cursor = self.db_connection.cursor()
         items = cursor.execute("select ID,NAME,PRICE,QUANTITY from items WHERE QUANTITY  > 0")
@@ -38,3 +49,26 @@ class DatabaseManager:
             item.set_quantity(row[3])
             dict_of_items[row[1]] = item
         return dict_of_items
+
+    def insert_element_records(self, product):
+        print("Insert ", product.get_name())
+        self.db_connection.execute("INSERT into records (NAME,PRICE,QUANTITY,PURCHASE_DATE) values (?,?,?,?)",
+                                   (product.get_name(), product.get_price(), product.get_quantity(), time))
+        self.db_connection.commit()
+
+    def get_records_as_list(self):
+        cursor = self.db_connection.cursor()
+        records = cursor.execute("select ID,NAME,PRICE,QUANTITY,PURCHASE_DATE from records")
+        list_of_records = []
+        for row in records:
+            list_of_records.append({"name": row[1], "price": row[2], "quantity": row[3], "date": time})
+        return list_of_records
+
+
+db = DatabaseManager()
+print(db.get_records_as_list())
+oreo = Item("oreo", 17.5, 9)
+# db.insert_element_records(oreo)
+print(db.get_records_as_list())
+# db.insert_element_records(oreo)
+# print(db.get_records_as_list())
