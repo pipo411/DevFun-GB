@@ -11,5 +11,8 @@ if __name__=="__main__":
     view = MainView()
     model = Shoppingcar()
     controller = CartController(view, model)
+    #view.setWindowFlag(WindowMaximizeButtonHint)
     sys.exit(app.exec_())
+
+
 

@@ -1,5 +1,4 @@
-from PyQt5.QtWidgets import QWidget, QFormLayout, QLineEdit, QLabel, QVBoxLayout, QGroupBox, QPushButton, QComboBox, \
-    QTableWidget, QTableWidgetItem, QAbstractItemView
+from PyQt5.QtWidgets import QWidget, QVBoxLayout, QAbstractItemView, QGridLayout, QLabel
 
 from src.com.jalasoft.shopping_car.ui.button_template import ButtonTemplate
 from src.com.jalasoft.shopping_car.ui.table_template import TableTemplate
@@ -16,7 +15,7 @@ class ProductShowView(QWidget):
     def initComponent(self):
         vLayout = QVBoxLayout()
 
-        self.table = TableTemplate(["ID", "Product Name", "Price", "Quantity"], "Steelblue")
+        self.table = TableTemplate(["ID", "Product Name", "Price", "Quantity"], "Skyblue")
         self.table.setSelectionBehavior(QAbstractItemView.SelectRows)
         self.table.setSelectionMode(QAbstractItemView.SingleSelection)
 
@@ -24,10 +23,17 @@ class ProductShowView(QWidget):
         # self.addBuyButton = QPushButton("Buy Items", self)
         self.addBuyButton = ButtonTemplate("Buy Items", """Limegreen""")
 
-        self.cartTable = TableTemplate(["ID", "Product Name", "Unit Price", "Total Price", "Quantity"], "Forestgreen")
+        self.cartTable = TableTemplate(["ID", "Product Name", "Unit Price", "Quantity", "Total Price"], "Lightgreen")
+
+        self.gridLayout = QGridLayout()
+        self.gridLayout.setColumnStretch(1,3)
+        self.gridLayout.addWidget(self.addButton, 1, 1)
+        self.gridLayout.addWidget(QLabel(" "), 1, 0)
+        self.gridLayout.addWidget(QLabel(" "), 1, 2)
 
         vLayout.addWidget(self.table)
-        vLayout.addWidget(self.addButton)
+        #vLayout.addWidget(self.gridLayout)
+        vLayout.addLayout(self.gridLayout)
         vLayout.addWidget(self.cartTable)
         vLayout.addWidget(self.addBuyButton)
 

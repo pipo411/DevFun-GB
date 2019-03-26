@@ -1,5 +1,6 @@
 from PyQt5.QtWidgets import QMainWindow, QMenu, QAction
 
+from src.com.jalasoft.shopping_car.ui.history_show_view import HistoryShowView
 from src.com.jalasoft.shopping_car.ui.product_insert_view import ProductInsertView
 from src.com.jalasoft.shopping_car.ui.product_show_view import ProductShowView
 
@@ -33,10 +34,10 @@ class MainView(QMainWindow):
         # insertOption.triggered.connect(lambda: )
         showOption.triggered.connect(lambda: self.loadProductShowView())
 
-        story = menuBar.addMenu("Historial")
-        storyMenu = QAction("Show hitorial", self)
+        story = menuBar.addMenu("Story")
+        storyMenu = QAction("Show Story", self)
         story.addAction(storyMenu)
-        storyMenu.triggered.connect(lambda: self.loadHistorialView())
+        storyMenu.triggered.connect(lambda: self.loadStoryShowView())
 
     def loadProductInsertView(self):
         self.setCentralWidget(ProductInsertView())
@@ -47,8 +48,7 @@ class MainView(QMainWindow):
         self.__controller.loadProduct()
         self.__controller.addActionListener()
 
-    def loadHistorialView(self):
-        pass
-        # self.setCentralWidget(HistoryShowView())
-        # self.__controller.loadHistory()
+    def loadHistoryShowView(self):
+        self.setCentralWidget(HistoryShowView())
+        #self.__controller.loadHistory()
         # self.__controller.addActionListener()

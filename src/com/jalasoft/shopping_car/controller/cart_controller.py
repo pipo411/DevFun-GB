@@ -3,6 +3,7 @@ from PyQt5.QtWidgets import QTableWidgetItem, QLineEdit, QComboBox
 from src.com.jalasoft.shopping_car.model.item import Item
 from src.com.jalasoft.shopping_car.ui.product_insert_view import ProductInsertView
 from src.com.jalasoft.shopping_car.ui.product_show_view import ProductShowView
+from src.com.jalasoft.shopping_car.ui.show_dialog import ShowDialog
 
 
 class CartController:
@@ -26,6 +27,8 @@ class CartController:
         pro.set_price(float(self.centralWidget.getPrice()))
         pro.set_quantity(int(self.centralWidget.getQuantity()))
         self.cartModel.add_item(pro)
+        dialog = ShowDialog()
+        dialog.show()
 
     def loadProduct(self):
         self.centralWidget = self.mainView.centralWidget()
@@ -66,6 +69,7 @@ class CartController:
             self.centralWidget.getCartTable().setItem(index, 1, QTableWidgetItem(prod.get_name()))
             self.centralWidget.getCartTable().setItem(index, 2, QTableWidgetItem(str(prod.get_price())))
             self.centralWidget.getCartTable().setCellWidget(index, 3, self.quantity)
+            self.centralWidget.getCartTable().setItem(index, 3, QTableWidgetItem(str(prod.get_price()*int(self.quantity.currentText()))))
             index = index + 1
 
     def buyItems(self):
@@ -77,3 +81,18 @@ class CartController:
             index += 1
         self.cartModel.buy(self.cartList)
         self.cartList = {}
+
+    def loadHistory(self):
+        pass
+        # self.centralWidget = self.mainView.centralWidget()
+        # self.listProduct = self.cartModel.get_items() #change for list buy list product
+        # listSize = len(self.listProduct)            #
+        # self.centralWidget.getStoryTable().setRowCount(listSize)
+        # index = 0
+        # for _, item in self.listProduct.items():
+        #     self.centralWidget.getStoryTable().setItem(index, 0, QTableWidgetItem(str(item.get_id())))
+        #     self.centralWidget.getStoryTable().setItem(index, 1, QTableWidgetItem(item.get_name()))
+        #     self.centralWidget.getStoryTable().setItem(index, 2, QTableWidgetItem(str(item.get_price())))
+        #     self.centralWidget.getStoryTable().setItem(index, 3, QTableWidgetItem(str(item.get_quantity())))
+        #     self.centralWidget.getStoryTable().setItem(index, 4, QTableWidgetItem(str(item.get_date())))
+        #     index = index + 1
