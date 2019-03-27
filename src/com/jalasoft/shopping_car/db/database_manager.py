@@ -1,11 +1,12 @@
 import logging
+import time
 
 from src.com.jalasoft.shopping_car.db.database_connection import DatabaseConnection
 from src.com.jalasoft.shopping_car.model.item import Item
 
 LOG = logging.getLogger()
 
-time = "8/05/93"
+time = (time.strftime("%d/%m/%y"))
 
 
 class DatabaseManager:
@@ -22,6 +23,11 @@ class DatabaseManager:
         self.db_connection.commit()
         LOG.info("Complete insert item")
 
+    def delete_element(self, id):
+        self.db_connection.execute("""DELETE FROM items WHERE  ID = ?""",
+                                   id)
+        self.db_connection.commit()
+
     def update_quantity_field(self, quantity, id):
         self.db_connection.execute("""UPDATE items SET QUANTITY = ? WHERE  ID = ?""",
                                    (quantity, id))
@@ -30,7 +36,7 @@ class DatabaseManager:
     def update_item_description(self, id, name=None, price=None):
         if name is not None:
             self.db_connection.execute("""UPDATE items SET NAME = ? WHERE  ID = ?""",
-                                   (name, id))
+                                       (name, id))
         if price is not None:
             self.db_connection.execute("""UPDATE items SET PRICE = ? WHERE  ID = ?""",
                                        (price, id))
@@ -68,7 +74,8 @@ class DatabaseManager:
 db = DatabaseManager()
 print(db.get_records_as_list())
 oreo = Item("oreo", 17.5, 9)
-# db.insert_element_records(oreo)
+#db.insert_element_records(oreo)
 print(db.get_records_as_list())
+db.delete_element(id)
 # db.insert_element_records(oreo)
 # print(db.get_records_as_list())
