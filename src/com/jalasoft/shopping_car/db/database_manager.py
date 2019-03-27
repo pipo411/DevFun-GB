@@ -71,11 +71,11 @@ class DatabaseManager:
         return list_of_records
 
 
-db = DatabaseManager()
-print(db.get_records_as_list())
-oreo = Item("oreo", 17.5, 9)
+#db = DatabaseManager()
+#print(db.get_records_as_list())
+#oreo = Item("oreo", 17.5, 9)
 #db.insert_element_records(oreo)
-print(db.get_records_as_list())
-db.delete_element(id)
+#print(db.get_records_as_list())
+#db.delete_element(id)
 # db.insert_element_records(oreo)
 # print(db.get_records_as_list())
