@@ -15,10 +15,18 @@ class CartController:
     def addActionListener(self):
         self.centralWidget = self.mainView.centralWidget()
         if isinstance(self.centralWidget, ProductInsertView):
-            self.centralWidget.getSaveProductButton().clicked.connect(lambda: self.saveProduct())
+            self.centralWidget.getSaveProductButton().clicked.connect(lambda: self.actionProduct())
         if isinstance(self.centralWidget, ProductShowView):
             self.centralWidget.getAddTocartButton().clicked.connect(lambda: self.addToCart())
             self.centralWidget.getBuyButton().clicked.connect(lambda: self.buyItems())
+
+    def actionProduct(self):
+        if self.centralWidget.getMenu() == 'insert':
+            self.saveProduct()
+        elif self.centralWidget.getMenu() == 'edit':
+            self.editProduct()
+        elif self.centralWidget.getMenu() == 'delete':
+            self.deleteProduct()
 
     def saveProduct(self):
         pro = Item()
@@ -26,6 +34,13 @@ class CartController:
         pro.set_price(float(self.centralWidget.getPrice()))
         pro.set_quantity(int(self.centralWidget.getQuantity()))
         self.cartModel.add_item(pro)
+
+    def editProduct(self):
+        self.cartModel.edit_item(str(self.centralWidget.getCurrentName()),
+                                 str(self.centralWidget.getName()), float(self.centralWidget.getPrice()))
+
+    def deleteProduct(self):
+        self.cartModel.delete_product(str(self.centralWidget.getName()))
 
     def loadProduct(self):
         self.centralWidget = self.mainView.centralWidget()
@@ -76,4 +91,20 @@ class CartController:
             self.cartList[item_name].set_quantity(int(item_quantity))
             index += 1
         self.cartModel.buy(self.cartList)
+        self.cartModel.save_sell(self.cartList)
         self.cartList = {}
+
+    def load_history(self):
+        self.centralWidget = self.mainView.centralWidget()
+        self.listRecordProduct = self.cartModel.get_records_items()
+        listSize = len(self.listRecordProduct)
+        print(self.listRecordProduct)
+        self.centralWidget.getHistoryTable().setRowCount(listSize)
+        index = 0
+        print(self.listRecordProduct)
+        for item in self.listRecordProduct:
+            self.centralWidget.getHistoryTable().setItem(index, 0, QTableWidgetItem(item["name"]))
+            self.centralWidget.getHistoryTable().setItem(index, 1, QTableWidgetItem(str(item["price"])))
+            self.centralWidget.getHistoryTable().setItem(index, 2, QTableWidgetItem(str(item["quantity"])))
+            self.centralWidget.getHistoryTable().setItem(index, 3, QTableWidgetItem(item["date"]))
+            index = index + 1

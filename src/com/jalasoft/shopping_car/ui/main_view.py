@@ -1,5 +1,6 @@
 from PyQt5.QtWidgets import QMainWindow, QMenu, QAction
 
+from src.com.jalasoft.shopping_car.ui.history_show_view import HistoryShowView
 from src.com.jalasoft.shopping_car.ui.product_insert_view import ProductInsertView
 from src.com.jalasoft.shopping_car.ui.product_show_view import ProductShowView
 
@@ -17,29 +18,41 @@ class MainView(QMainWindow):
         self.show()
 
     def initComponent(self):
-        self.loadProductInsertView()
         menuBar = self.menuBar()
-        prodOption = menuBar.addMenu("Register")
+        prodOption = menuBar.addMenu("Product")
 
-        productMenu = QMenu("Product", self)
-        prodOption.addMenu(productMenu)
+        insertMenu = QAction("Insert", self)
+        editMenu = QAction("Edit", self)
+        deleteMenu = QAction("Delete", self)
+        prodOption.addAction(insertMenu)
+        prodOption.addAction(editMenu)
+        prodOption.addAction(deleteMenu)
 
-        # insertOption = QAction("Insert", self)
-        # productMenu.addAction(insertOption)
+        store = menuBar.addMenu("Store")
+        shoppingCart = QAction("Shopping Cart", self)
+        store.addAction(shoppingCart)
 
-        showOption = QAction("Show", self)
-        productMenu.addAction(showOption)
+        insertMenu.triggered.connect(lambda: self.loadProductInsertView())
+        editMenu.triggered.connect(lambda: self.loadProductEditView())
+        deleteMenu.triggered.connect(lambda: self.loadProductDeleteView())
 
-        # insertOption.triggered.connect(lambda: )
-        showOption.triggered.connect(lambda: self.loadProductShowView())
+        shoppingCart.triggered.connect(lambda: self.loadProductShowView())
 
-        story = menuBar.addMenu("Historial")
-        storyMenu = QAction("Show hitorial", self)
+        story = menuBar.addMenu("History")
+        storyMenu = QAction("Show History", self)
         story.addAction(storyMenu)
-        storyMenu.triggered.connect(lambda: self.loadHistorialView())
+        storyMenu.triggered.connect(lambda: self.loadHistoryView())
 
     def loadProductInsertView(self):
-        self.setCentralWidget(ProductInsertView())
+        self.setCentralWidget(ProductInsertView("insert"))
+        self.__controller.addActionListener()
+
+    def loadProductEditView(self):
+        self.setCentralWidget(ProductInsertView("edit"))
+        self.__controller.addActionListener()
+
+    def loadProductDeleteView(self):
+        self.setCentralWidget(ProductInsertView("delete"))
         self.__controller.addActionListener()
 
     def loadProductShowView(self):
@@ -47,8 +60,7 @@ class MainView(QMainWindow):
         self.__controller.loadProduct()
         self.__controller.addActionListener()
 
-    def loadHistorialView(self):
-        pass
-        # self.setCentralWidget(HistoryShowView())
-        # self.__controller.loadHistory()
+    def loadHistoryView(self):
+        self.setCentralWidget(HistoryShowView())
+        self.__controller.load_history()
         # self.__controller.addActionListener()

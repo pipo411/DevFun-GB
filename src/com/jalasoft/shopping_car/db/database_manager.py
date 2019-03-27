@@ -16,16 +16,15 @@ class DatabaseManager:
         self.db_connection = self.db
 
     def insert_element(self, item):
-        LOG.info("Insert Item")
-        LOG.info(item.get_name())
+        LOG.debug("Insert Item")
+        LOG.debug(item.get_name())
         self.db_connection.execute("INSERT into items (NAME,PRICE,QUANTITY) values (?,?,?)",
                                    (item.get_name(), item.get_price(), item.get_quantity()))
         self.db_connection.commit()
-        LOG.info("Complete insert item")
+        LOG.debug("Complete insert item")
 
     def delete_element(self, id):
-        self.db_connection.execute("""DELETE FROM items WHERE  ID = ?""",
-                                   id)
+        self.db_connection.execute("""DELETE FROM items WHERE  ID = ?""", (id,))
         self.db_connection.commit()
 
     def update_quantity_field(self, quantity, id):
@@ -64,18 +63,17 @@ class DatabaseManager:
 
     def get_records_as_list(self):
         cursor = self.db_connection.cursor()
-        records = cursor.execute("select ID,NAME,PRICE,QUANTITY,PURCHASE_DATE from records")
+        records = cursor.execute("select ID,NAME,PRICE,QUANTITY,PURCHASE_DATE from records  WHERE QUANTITY  > 0")
         list_of_records = []
         for row in records:
             list_of_records.append({"name": row[1], "price": row[2], "quantity": row[3], "date": time})
         return list_of_records
 
-
-#db = DatabaseManager()
-#print(db.get_records_as_list())
-#oreo = Item("oreo", 17.5, 9)
-#db.insert_element_records(oreo)
-#print(db.get_records_as_list())
-#db.delete_element(id)
+# db = DatabaseManager()
+# print(db.get_records_as_list())
+# oreo = Item("oreo", 17.5, 9)
+# db.insert_element_records(oreo)
+# print(db.get_records_as_list())
+# db.delete_element(id)
 # db.insert_element_records(oreo)
 # print(db.get_records_as_list())
