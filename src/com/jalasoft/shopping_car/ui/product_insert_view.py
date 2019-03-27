@@ -7,21 +7,18 @@ class ProductInsertView(QWidget):
 
     def __init__(self, menu):
         super().__init__()
+        self.menu = menu
         self.initUI(menu)
 
     def initUI(self, menu):
         vLayout = QVBoxLayout()
 
-        self.core_product_menu = {"insert": self.insertMenu(), "edit": self.editMenu(), "delete": self.deleteMenu()}
-        group = self.core_product_menu[menu]
-        # group = QGroupBox()
-        # form = QFormLayout()
-        #
-        # form.addRow(lblProduct)
-        # form.addRow(self.nameComponent(), self.name)
-        # form.addRow(self.priceComponent(), self.price)
-        # form.addRow(self.quantityComponent(), self.quantity)
-        # group.setLayout(form)
+        if menu == 'insert':
+            group = self.insertMenu()
+        elif menu == "edit":
+            group = self.editMenu()
+        elif menu == "delete":
+            group = self.deleteMenu()
 
         self.saveButton = ButtonTemplate("Save Product", "palegoldenrod")
 
@@ -30,7 +27,7 @@ class ProductInsertView(QWidget):
         self.setLayout(vLayout)
 
     def insertMenu(self):
-        lblProduct = QLabel("Insert Product")
+        lblProduct = QLabel("Insert New Product")
 
         group = QGroupBox()
         form = QFormLayout()
@@ -39,7 +36,10 @@ class ProductInsertView(QWidget):
         form.addRow(self.nameComponent(), self.name)
         form.addRow(self.priceComponent(), self.price)
         form.addRow(self.quantityComponent(), self.quantity)
+
         group.setLayout(form)
+        self.saveButton = ButtonTemplate("Save Product", "palegoldenrod")
+
         return group
 
     def editMenu(self):
@@ -49,6 +49,7 @@ class ProductInsertView(QWidget):
         form = QFormLayout()
 
         form.addRow(lblProduct)
+        form.addRow(self.nameActualComponent(), self.actual_name)
         form.addRow(self.nameComponent(), self.name)
         form.addRow(self.priceComponent(), self.price)
         group.setLayout(form)
@@ -83,15 +84,26 @@ class ProductInsertView(QWidget):
         self.quantity.setPlaceholderText("Set the product Quantity")
         return lblQuantity
 
+    def nameActualComponent(self):
+        lblName = QLabel("Current Product Name: ")
+        self.actual_name = QLineEdit()
+        self.actual_name.setPlaceholderText("Set the actual product name")
+        return lblName
+
     def getSaveProductButton(self):
         return self.saveButton
 
     def getName(self):
         return self.name.text()
 
+    def getCurrentName(self):
+        return self.actual_name.text()
+
     def getPrice(self):
         return self.price.text()
 
     def getQuantity(self):
         return self.quantity.text()
-   
+
+    def getMenu(self):
+        return self.menu

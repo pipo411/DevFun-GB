@@ -1,5 +1,6 @@
 from PyQt5.QtWidgets import QMainWindow, QMenu, QAction
 
+from src.com.jalasoft.shopping_car.ui.history_show_view import HistoryShowView
 from src.com.jalasoft.shopping_car.ui.product_insert_view import ProductInsertView
 from src.com.jalasoft.shopping_car.ui.product_show_view import ProductShowView
 
@@ -27,26 +28,20 @@ class MainView(QMainWindow):
         prodOption.addAction(editMenu)
         prodOption.addAction(deleteMenu)
 
-        # productMenu = QMenu("Product", self)
-        # prodOption.addMenu(productMenu)
+        store = menuBar.addMenu("Store")
+        shoppingCart = QAction("Shopping Cart", self)
+        store.addAction(shoppingCart)
 
-        # insertOption = QAction("Insert", self)
-        # prodOption.addAction(insertOption)
-        #
-        showOption = QAction("Show", self)
-        # prodOption.addAction(showOption)
-
-        # insertOption.triggered.connect(lambda: )
         insertMenu.triggered.connect(lambda: self.loadProductInsertView())
         editMenu.triggered.connect(lambda: self.loadProductEditView())
         deleteMenu.triggered.connect(lambda: self.loadProductDeleteView())
 
-        showOption.triggered.connect(lambda: self.loadProductShowView())
+        shoppingCart.triggered.connect(lambda: self.loadProductShowView())
 
-        story = menuBar.addMenu("Historial")
-        storyMenu = QAction("Show hitorial", self)
+        story = menuBar.addMenu("History")
+        storyMenu = QAction("Show History", self)
         story.addAction(storyMenu)
-        storyMenu.triggered.connect(lambda: self.loadHistorialView())
+        storyMenu.triggered.connect(lambda: self.loadHistoryView())
 
     def loadProductInsertView(self):
         self.setCentralWidget(ProductInsertView("insert"))
@@ -65,8 +60,7 @@ class MainView(QMainWindow):
         self.__controller.loadProduct()
         self.__controller.addActionListener()
 
-    def loadHistorialView(self):
-        pass
-        # self.setCentralWidget(HistoryShowView())
-        # self.__controller.loadHistory()
+    def loadHistoryView(self):
+        self.setCentralWidget(HistoryShowView())
+        self.__controller.load_history()
         # self.__controller.addActionListener()
