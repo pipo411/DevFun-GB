@@ -16,7 +16,7 @@ class ProductShowView(QWidget):
     def initComponent(self):
         vLayout = QVBoxLayout()
 
-        self.table = TableTemplate(["ID", "Product Name", "Price", "Quantity"], "Steelblue")
+        self.table = TableTemplate(["ID", "Product Name", "Price", "Quantity"], "Skyblue")
         self.table.setSelectionBehavior(QAbstractItemView.SelectRows)
         self.table.setSelectionMode(QAbstractItemView.SingleSelection)
 
@@ -24,7 +24,7 @@ class ProductShowView(QWidget):
         # self.addBuyButton = QPushButton("Buy Items", self)
         self.addBuyButton = ButtonTemplate("Buy Items", """Limegreen""")
 
-        self.cartTable = TableTemplate(["ID", "Product Name", "Unit Price", "Total Price", "Quantity"], "Forestgreen")
+        self.cartTable = TableTemplate(["ID", "Product Name", "Unit Price", "Total Price", "Quantity"], "Lightgreen")
 
         vLayout.addWidget(self.table)
         vLayout.addWidget(self.addButton)

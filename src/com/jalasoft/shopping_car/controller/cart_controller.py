@@ -3,6 +3,7 @@ from PyQt5.QtWidgets import QTableWidgetItem, QLineEdit, QComboBox
 from src.com.jalasoft.shopping_car.model.item import Item
 from src.com.jalasoft.shopping_car.ui.product_insert_view import ProductInsertView
 from src.com.jalasoft.shopping_car.ui.product_show_view import ProductShowView
+from src.com.jalasoft.shopping_car.ui.show_dialog import ShowDialog
 
 
 class CartController:
@@ -13,6 +14,10 @@ class CartController:
         self.cartList = {}
 
     def addActionListener(self):
+        """
+        :rtype: object
+
+        """
         self.centralWidget = self.mainView.centralWidget()
         if isinstance(self.centralWidget, ProductInsertView):
             self.centralWidget.getSaveProductButton().clicked.connect(lambda: self.actionProduct())
@@ -29,11 +34,15 @@ class CartController:
             self.deleteProduct()
 
     def saveProduct(self):
-        pro = Item()
-        pro.set_name(self.centralWidget.getName())
-        pro.set_price(float(self.centralWidget.getPrice()))
-        pro.set_quantity(int(self.centralWidget.getQuantity()))
-        self.cartModel.add_item(pro)
+        if (self.centralWidget.getName() or self.centralWidget.getPrice() or self.centralWidget.getQuantity()) == "":
+            self.dialog = ShowDialog("warning", "Please add an Item")
+        else:
+            pro = Item()
+            pro.set_name(self.centralWidget.getName())
+            pro.set_price(float(self.centralWidget.getPrice()))
+            pro.set_quantity(int(self.centralWidget.getQuantity()))
+            self.cartModel.add_item(pro)
+            self.dialog = ShowDialog("information", "Item was added")
 
     def editProduct(self):
         self.cartModel.edit_item(str(self.centralWidget.getCurrentName()),
@@ -93,6 +102,7 @@ class CartController:
         self.cartModel.buy(self.cartList)
         self.cartModel.save_sell(self.cartList)
         self.cartList = {}
+        self.dialog = ShowDialog("Thanks for buying")
 
     def load_history(self):
         self.centralWidget = self.mainView.centralWidget()
