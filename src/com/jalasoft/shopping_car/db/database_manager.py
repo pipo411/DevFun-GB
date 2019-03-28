@@ -16,12 +16,16 @@ class DatabaseManager:
         self.db_connection = self.db
 
     def insert_element(self, item):
-        LOG.debug("Insert Item")
-        LOG.debug(item.get_name())
+        """
+
+        :param item:
+        """
+        LOG.info("Insert Item")
+        LOG.info(item.get_name())
         self.db_connection.execute("INSERT into items (NAME,PRICE,QUANTITY) values (?,?,?)",
                                    (item.get_name(), item.get_price(), item.get_quantity()))
         self.db_connection.commit()
-        LOG.debug("Complete insert item")
+        LOG.info("Complete insert item")
 
     def delete_element(self, id):
         self.db_connection.execute("""DELETE FROM items WHERE  ID = ?""", (id,))
@@ -54,6 +58,12 @@ class DatabaseManager:
             item.set_quantity(row[3])
             dict_of_items[row[1]] = item
         return dict_of_items
+
+    def get_item(self, name):
+        cursor = self.db_connection.cursor()
+        item = cursor.execute("select ID,NAME,PRICE,QUANTITY from items WHERE NAME  =  ?", (name))
+        return item
+
 
     def insert_element_records(self, product):
         print("Insert ", product.get_name())
