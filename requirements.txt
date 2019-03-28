@@ -1,4 +1,4 @@
-astroid==2.2.4
+pastroid==2.2.4
 colorama==0.4.1
 future==0.17.1
 git-pylint-commit-hook==2.5.1
