@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QTableWidgetItem, QLineEdit, QComboBox
+from PyQt5.QtWidgets import QTableWidgetItem, QComboBox
 
 from src.com.jalasoft.shopping_car.model.item import Item
 from src.com.jalasoft.shopping_car.ui.product_insert_view import ProductInsertView
@@ -8,64 +8,78 @@ from src.com.jalasoft.shopping_car.ui.show_dialog import ShowDialog
 
 class CartController:
     def __init__(self, mainView, cartModel):
-        self.mainView = mainView
-        self.cartModel = cartModel
-        self.mainView.initUI(self)
-        self.cartList = {}
+        self.main_view = mainView
+        self.cart_model = cartModel
+        self.main_view.initUI(self)
+        self.cart_list = {}
 
-    def addActionListener(self):
+    def add_action_listener(self):
         """
-        :rtype: object
 
         """
-        self.centralWidget = self.mainView.centralWidget()
-        if isinstance(self.centralWidget, ProductInsertView):
-            self.centralWidget.getSaveProductButton().clicked.connect(lambda: self.actionProduct())
-        if isinstance(self.centralWidget, ProductShowView):
-            self.centralWidget.getAddTocartButton().clicked.connect(lambda: self.addToCart())
-            self.centralWidget.getBuyButton().clicked.connect(lambda: self.buyItems())
+        self.central_widget = self.main_view.centralWidget()
+        if isinstance(self.central_widget, ProductInsertView):
+            self.central_widget.get_save_product_button().clicked.connect(lambda: self.action_product())
+        if isinstance(self.central_widget, ProductShowView):
+            self.central_widget.get_add_tocart_button().clicked.connect(lambda: self.add_to_cart())
+            self.central_widget.get_buy_button().clicked.connect(lambda: self.buy_items())
 
-    def actionProduct(self):
-        if self.centralWidget.getMenu() == 'insert':
-            self.saveProduct()
-        elif self.centralWidget.getMenu() == 'edit':
-            self.editProduct()
-        elif self.centralWidget.getMenu() == 'delete':
-            self.deleteProduct()
+    def action_product(self):
+        if self.central_widget.get_menu() == 'insert':
+            self.save_product()
+        elif self.central_widget.get_menu() == 'edit':
+            self.edit_product()
+        elif self.central_widget.get_menu() == 'delete':
+            self.delete_product()
 
-    def saveProduct(self):
-        if (self.centralWidget.getName() or self.centralWidget.getPrice() or self.centralWidget.getQuantity()) == "":
-            self.dialog = ShowDialog("warning", "Please add an Item")
+    def save_product(self):
+        name = self.empty_string(self.central_widget.get_name())
+        price = self.empty_string(self.central_widget.get_price())
+        quantity = self.empty_string(self.central_widget.get_quantity())
+        if (name or price or quantity):
+            self.dialog = ShowDialog("warning", "Missing fill fields \nPlease add an Item")
         else:
             pro = Item()
-            pro.set_name(self.centralWidget.getName())
-            pro.set_price(float(self.centralWidget.getPrice()))
-            pro.set_quantity(int(self.centralWidget.getQuantity()))
-            self.cartModel.add_item(pro)
+            pro.set_name(self.central_widget.get_name())
+            pro.set_price(float(self.central_widget.get_price()))
+            pro.set_quantity(int(self.central_widget.get_quantity()))
+            self.cart_model.add_item(pro)
             self.dialog = ShowDialog("information", "Item was added")
 
-    def editProduct(self):
-        self.cartModel.edit_item(str(self.centralWidget.getCurrentName()),
-                                 str(self.centralWidget.getName()), float(self.centralWidget.getPrice()))
+    def empty_string(self, string):
+        return string == ""
 
-    def deleteProduct(self):
-        self.cartModel.delete_product(str(self.centralWidget.getName()))
+    def edit_product(self):
+        if self.empty_string(self.central_widget.get_current_name()):
+            self.dialog = ShowDialog("warning", "Missing fill fields")
+        else:
+            self.cart_model.edit_item(str(self.central_widget.get_current_name()),
+                                  str(self.central_widget.get_name()), float(self.central_widget.get_price()))
+            self.dialog = ShowDialog("information", "Item was edited")
 
-    def loadProduct(self):
-        self.centralWidget = self.mainView.centralWidget()
-        self.listProduct = self.cartModel.get_items()
+    def delete_product(self):
+        name = self.central_widget.get_name()
+        if self.empty_string(name):
+            self.dialog = ShowDialog("warning", "Missing fill fields \nPlease add an Item name")
+        else:
+            self.cart_model.delete_product(str(self.central_widget.get_name()))
+            self.dialog = ShowDialog("information", "removed Item "+name)
+
+    def load_product(self):
+        self.central_widget = self.main_view.centralWidget()
+        self.listProduct = self.cart_model.get_items()
         listSize = len(self.listProduct)
-        self.centralWidget.getTable().setRowCount(listSize)
+        self.central_widget.get_table().setRowCount(listSize)
         index = 0
         for _, item in self.listProduct.items():
-            self.centralWidget.getTable().setItem(index, 0, QTableWidgetItem(str(item.get_id())))
-            self.centralWidget.getTable().setItem(index, 1, QTableWidgetItem(item.get_name()))
-            self.centralWidget.getTable().setItem(index, 2, QTableWidgetItem(str(item.get_price())))
-            self.centralWidget.getTable().setItem(index, 3, QTableWidgetItem(str(item.get_quantity())))
+            self.central_widget.get_table().setItem(index, 0, QTableWidgetItem(str(item.get_id())))
+            self.central_widget.get_table().setItem(index, 1, QTableWidgetItem(item.get_name()))
+            self.central_widget.get_table().setItem(index, 2, QTableWidgetItem(str(item.get_price())))
+            self.central_widget.get_table().setItem(index, 3, QTableWidgetItem(str(item.get_quantity())))
             index = index + 1
 
-    def addToCart(self):
-        indexes = self.centralWidget.getTable().selectionModel().selectedIndexes()
+    def add_to_cart(self):
+        indexes = self.central_widget.get_table().selectionModel().selectedIndexes()
         id = indexes[0].sibling(indexes[0].row(), indexes[0].column()).data();
         name = indexes[1].sibling(indexes[1].row(), indexes[1].column()).data();
         price = indexes[2].sibling(indexes[2].row(), indexes[2].column()).data();
@@ -74,47 +88,47 @@ class CartController:
         pro.set_id(id)
         pro.set_name(name)
         pro.set_price(price)
-        self.cartList[pro.get_name()] = pro
-        self.loadCartTable()
+        self.cart_list[pro.get_name()] = pro
+        self.load_cart_table()
 
-    def loadCartTable(self):
-        listSize = len(self.cartList)
-        self.centralWidget.getCartTable().setRowCount(listSize)
+    def load_cart_table(self):
+        listSize = len(self.cart_list)
+        self.central_widget.get_cart_table().setRowCount(listSize)
         index = 0
-        for _, prod in self.cartList.items():
+        for _, prod in self.cart_list.items():
             self.quantity = QComboBox()
             count = self.listProduct[prod.get_name()].get_quantity()
             for i in range(1, count + 1):
                 self.quantity.addItem(str(i))
-            self.centralWidget.getCartTable().setItem(index, 0, QTableWidgetItem(str(prod.get_id())))
-            self.centralWidget.getCartTable().setItem(index, 1, QTableWidgetItem(prod.get_name()))
-            self.centralWidget.getCartTable().setItem(index, 2, QTableWidgetItem(str(prod.get_price())))
-            self.centralWidget.getCartTable().setCellWidget(index, 3, self.quantity)
+            self.central_widget.get_cart_table().setItem(index, 0, QTableWidgetItem(str(prod.get_id())))
+            self.central_widget.get_cart_table().setItem(index, 1, QTableWidgetItem(prod.get_name()))
+            self.central_widget.get_cart_table().setItem(index, 2, QTableWidgetItem(str(prod.get_price())))
+            self.central_widget.get_cart_table().setCellWidget(index, 3, self.quantity)
             index = index + 1
 
-    def buyItems(self):
+    def buy_items(self):
         index = 0
-        while self.centralWidget.getCartTable().rowCount() > index:
-            item_name = self.centralWidget.getCartTable().takeItem(index, 1).text()
-            item_quantity = self.centralWidget.getCartTable().cellWidget(index, 3).currentText()
-            self.cartList[item_name].set_quantity(int(item_quantity))
+        while self.central_widget.get_cart_table().rowCount() > index:
+            item_name = self.central_widget.get_cart_table().takeItem(index, 1).text()
+            item_quantity = self.central_widget.get_cart_table().cellWidget(index, 3).currentText()
+            self.cart_list[item_name].set_quantity(int(item_quantity))
             index += 1
-        self.cartModel.buy(self.cartList)
-        self.cartModel.save_sell(self.cartList)
-        self.cartList = {}
-        self.dialog = ShowDialog("Thanks for buying")
+        self.cart_model.buy(self.cart_list)
+        self.cart_model.save_sell(self.cart_list)
+        self.cart_list = {}
+        self.dialog = ShowDialog("information", "Thanks for buying")
 
     def load_history(self):
-        self.centralWidget = self.mainView.centralWidget()
-        self.listRecordProduct = self.cartModel.get_records_items()
+        self.central_widget = self.main_view.centralWidget()
+        self.listRecordProduct = self.cart_model.get_records_items()
         listSize = len(self.listRecordProduct)
         print(self.listRecordProduct)
-        self.centralWidget.getHistoryTable().setRowCount(listSize)
+        self.central_widget.get_history_table().setRowCount(listSize)
         index = 0
         print(self.listRecordProduct)
         for item in self.listRecordProduct:
-            self.centralWidget.getHistoryTable().setItem(index, 0, QTableWidgetItem(item["name"]))
-            self.centralWidget.getHistoryTable().setItem(index, 1, QTableWidgetItem(str(item["price"])))
-            self.centralWidget.getHistoryTable().setItem(index, 2, QTableWidgetItem(str(item["quantity"])))
-            self.centralWidget.getHistoryTable().setItem(index, 3, QTableWidgetItem(item["date"]))
+            self.central_widget.get_history_table().setItem(index, 0, QTableWidgetItem(item["name"]))
+            self.central_widget.get_history_table().setItem(index, 1, QTableWidgetItem(str(item["price"])))
+            self.central_widget.get_history_table().setItem(index, 2, QTableWidgetItem(str(item["quantity"])))
+            self.central_widget.get_history_table().setItem(index, 3, QTableWidgetItem(item["date"]))
             index = index + 1
