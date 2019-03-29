@@ -1,11 +1,11 @@
 import unittest
 
-
+# Verify that is Number
 class checkNumber(unittest.TestCase):
 
      def test_int_float(self):
         self.assertEqual(1,1.0)
-    # END test_int_float
+    # END is test_int_float
 
 # END ChekNumber
 

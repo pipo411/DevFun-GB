@@ -2,7 +2,7 @@ import unittest
 
 from PyQt5.QtGui import QDoubleValidator
 
-
+# Validator for Line Edit
 class Dialogo(unittest.TestCase):
 
     def validate_name(self):

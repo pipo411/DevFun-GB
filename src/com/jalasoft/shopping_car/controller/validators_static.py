@@ -8,9 +8,8 @@ from PyQt5.QtWidgets import QDialog, QMessageBox
 class Dialogo(QDialog):
     def __init__(self):
         QDialog.__init__(self)
-        self.nombre.textChanged.connect(self.validate_name)
-        self.price.textChanged.connect(self.validate_price)
-        self.boton.clicked.connect(self.validate_form)
+        self.nombre.textChanged.connect(self.validate_name) # Validate name
+        self.price.textChanged.connect(self.validate_price) # Validate price
 
     @staticmethod
     def validate_name(self):

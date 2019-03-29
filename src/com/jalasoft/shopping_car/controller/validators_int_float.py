@@ -3,7 +3,7 @@ import time
 
 from pip._vendor.distlib.compat import raw_input
 
-def read_int():
+def read_int(): # Read Integer
     while True:
         entry = raw_input("Write a whole number: ")
     try:
@@ -14,7 +14,7 @@ def read_int():
         "The entry is incorrect: write a whole number"
 
 
-def is_int(var):
+def is_int(var): # Validate if is Integer
     try:
         int(var)
         return True
