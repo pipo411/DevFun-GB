@@ -1,3 +1,6 @@
+"""
+This class has the methods with the db queries.
+"""
 import logging
 import time
 
@@ -17,8 +20,8 @@ class DatabaseManager:
 
     def insert_element(self, item):
         """
-
-        :param item:
+        This method inserts elements in db.
+        :param item: Item()
         """
         LOG.info("Insert Item")
         LOG.info(item.get_name())
