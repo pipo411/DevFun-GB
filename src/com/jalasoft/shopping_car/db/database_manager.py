@@ -2,9 +2,9 @@ import logging
 import time
 
 from src.com.jalasoft.shopping_car.db.database_connection import DatabaseConnection
+from src.com.jalasoft.shopping_car.logger import LOG
 from src.com.jalasoft.shopping_car.model.item import Item
 
-LOG = logging.getLogger()
 
 time = (time.strftime("%d/%m/%y"))
 

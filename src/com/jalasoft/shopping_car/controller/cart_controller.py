@@ -100,7 +100,7 @@ class CartController:
             self.cartList[item_name].set_quantity(int(item_quantity))
             index += 1
         self.cartModel.buy(self.cartList)
-        self.cartModel.save_sell(self.cartList)
+        self.cartModel.save_records(self.cartList)
         self.cartList = {}
         self.dialog = ShowDialog("Thanks for buying")
 
