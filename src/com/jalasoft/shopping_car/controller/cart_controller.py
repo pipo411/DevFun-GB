@@ -113,10 +113,12 @@ class CartController:
             item_quantity = self.central_widget.get_cart_table().cellWidget(index, 3).currentText()
             self.cart_list[item_name].set_quantity(int(item_quantity))
             index += 1
+
         self.cart_model.buy(self.cart_list)
         self.cart_model.save_sell(self.cart_list)
         self.cart_list = {}
         self.dialog = ShowDialog("information", "Thanks for buying")
+
 
     def load_history(self):
         self.central_widget = self.main_view.centralWidget()
