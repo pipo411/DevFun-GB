@@ -1,5 +1,5 @@
 from PyQt5.QtWidgets import QMainWindow, QMenu, QAction
-
+from PyQt5 import QtCore
 from src.com.jalasoft.shopping_car.ui.history_show_view import HistoryShowView
 from src.com.jalasoft.shopping_car.ui.product_insert_view import ProductInsertView
 from src.com.jalasoft.shopping_car.ui.product_show_view import ProductShowView
@@ -15,6 +15,7 @@ class MainView(QMainWindow):
         self.setWindowTitle("Test")
         self.resize(1000, 600)
         self.initComponent()
+        self.setWindowFlags(QtCore.Qt.WindowCloseButtonHint | QtCore.Qt.WindowMinimizeButtonHint)
         self.show()
 
     def initComponent(self):

@@ -15,12 +15,15 @@ class ProductInsertView(QWidget):
 
         if menu == 'insert':
             group = self.insertMenu()
+            buttonMessage = "Save Product"
         elif menu == "edit":
             group = self.editMenu()
+            buttonMessage = "Edit Product"
         elif menu == "delete":
             group = self.deleteMenu()
+            buttonMessage = "Delete Product"
 
-        self.saveButton = ButtonTemplate("Save Product", "palegoldenrod")
+        self.saveButton = ButtonTemplate(buttonMessage, "palegoldenrod")
 
         vLayout.addWidget(group)
         vLayout.addWidget(self.saveButton)
