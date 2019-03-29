@@ -1,13 +1,13 @@
 import re
 
 from PyQt5 import uic
+from PyQt5.QtGui import QIntValidator, QDoubleValidator
 from PyQt5.QtWidgets import QDialog, QMessageBox
 
 
 class Dialogo(QDialog):
     def __init__(self):
         QDialog.__init__(self)
-        uic.loadUi("validation.ui", self)
         self.nombre.textChanged.connect(self.validate_name)
         self.price.textChanged.connect(self.validate_price)
         self.boton.clicked.connect(self.validate_form)
@@ -50,3 +50,13 @@ class Dialogo(QDialog):
 
         if long > 5 and long < 13 and y == True:
             return True  # True If the size is greater than 5 and less than 13
+
+        def validatorChanged(self, index):
+            if index == 0:
+                self.validatorLineEdit.setValidator(0)
+            elif index == 1:
+                self.validatorLineEdit.setValidator(QIntValidator(self.validatorLineEdit))
+            elif index == 2:
+                self.validatorLineEdit.setValidator(QDoubleValidator(-999.0, 999.0, 2, self.validatorLineEdit))
+
+            self.validatorLineEdit.clear()
