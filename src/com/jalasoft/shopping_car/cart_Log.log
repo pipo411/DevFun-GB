@@ -1,4 +1,0 @@
-2019-03-28 22:37:03,148 - src.com.jalasoft.shopping_car.logger - INFO - Enter on Store constructor
-2019-03-28 22:37:16,090 - src.com.jalasoft.shopping_car.logger - INFO - Add Product
-2019-03-28 22:37:16,090 - src.com.jalasoft.shopping_car.logger - INFO - Add the item: flores, price:19.6, quantity:98
-2019-03-28 22:37:16,212 - src.com.jalasoft.shopping_car.logger - INFO - Complete to add a item successful
