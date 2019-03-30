@@ -110,7 +110,7 @@ class DatabaseManager:
         records = cursor.execute("select ID,NAME,PRICE,QUANTITY,PURCHASE_DATE from records  WHERE QUANTITY  > 0")
         list_of_records = []
         for row in records:
-            list_of_records.append({"name": row[1], "price": row[2], "quantity": row[3], "date": time})
+            list_of_records.append({"name": row[1], "price": row[2], "quantity": row[3], "date": TIME})
         return list_of_records
 
 # db = DatabaseManager()
