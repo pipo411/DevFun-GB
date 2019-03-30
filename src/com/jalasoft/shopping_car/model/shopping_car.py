@@ -37,3 +37,14 @@ class Shoppingcar(Store):
         for _, item in products.items():
             self.db_manager.insert_element_records(item)
         LOG.info("Complete to save item records")
+
+    def get_total_price(self, products):
+        """
+        Get the total price of the record.
+        :param products:    float price.
+        """
+        LOG.info("Start to get_total_price %s", products)
+        total_price = 0.0
+        for _, item in products.items():
+            total_price += (float(item.get_price()) * int(item.get_quantity()))
+        return str(total_price)

@@ -11,6 +11,7 @@ class ProductShowView(QWidget):
     """
     class displays the  items  of the store
     """
+
     def __init__(self):
         """
         constructor
@@ -38,8 +39,7 @@ class ProductShowView(QWidget):
         # self.addBuyButton = QPushButton("Buy Items", self)
         self.add_buy_button = ButtonTemplate("Buy Items", """Limegreen""")
 
-
-        self.cart_table = TableTemplate(["ID", "Product Name", "Unit Price", "Total Price", "Quantity"], "Lightgreen")
+        self.cart_table = TableTemplate(["ID", "Product Name", "Unit Price", "Quantity"], "Lightgreen")
 
         vLayout.addWidget(self.table)
         vLayout.addWidget(self.add_button)
