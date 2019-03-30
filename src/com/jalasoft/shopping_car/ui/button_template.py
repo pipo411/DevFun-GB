@@ -3,6 +3,11 @@ from PyQt5.QtWidgets import QPushButton
 
 class ButtonTemplate(QPushButton):
     def __init__(self, name, color):
+        """
+        Template for all the buttons
+        :param name: name of the button
+        :param color: color of the background
+        """
         super().__init__()
         stl = """QPushButton {
             background-color: """ + color + """;
