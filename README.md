@@ -1,5 +1,5 @@
 # DevFun-GB
-#Shopping Cart
+# Shopping Cart
 Dev Fundamentals Python -  Project Shopping Car
 
 To execute the pryect need to install the requirements:
@@ -21,11 +21,11 @@ Review Historial
 ![alt text](src/images/history.png)
 
 
-#Members
+# Members
 
-Ariel Gonzales
-Franz Vidangos
-Kattya Espinoza
-Vivian Zamorano
+ - Ariel Gonzales
+ - Franz Vidangos
+ - Kattya Espinoza
+ - Vivian Zamorano
 
 
