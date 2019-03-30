@@ -45,6 +45,7 @@ class MainView(QMainWindow):
         History actions:
             add show history menu
         """
+        self.load_product_insert_view()
         menu_bar = self.menuBar()
         prod_option = menu_bar.addMenu("Product")
 

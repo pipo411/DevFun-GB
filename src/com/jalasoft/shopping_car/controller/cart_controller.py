@@ -54,7 +54,7 @@ class CartController:
             self.dialog = ShowDialog("warning", "Missing fill fields")
         else:
             self.cart_model.edit_item(str(self.central_widget.get_current_name()),
-                                  str(self.central_widget.get_name()), float(self.central_widget.get_price()))
+                                      str(self.central_widget.get_name()), float(self.central_widget.get_price()))
             self.dialog = ShowDialog("information", "Item was edited")
 
     def delete_product(self):
@@ -63,7 +63,7 @@ class CartController:
             self.dialog = ShowDialog("warning", "Missing fill fields \nPlease add an Item name")
         else:
             self.cart_model.delete_product(str(self.central_widget.get_name()))
-            self.dialog = ShowDialog("information", "removed Item "+name)
+            self.dialog = ShowDialog("information", "removed Item " + name)
 
     def load_product(self):
         self.central_widget = self.main_view.centralWidget()
@@ -116,18 +116,16 @@ class CartController:
 
         self.cart_model.buy(self.cart_list)
         self.cart_model.save_records(self.cart_list)
+        total_price = self.cart_model.get_total_price(self.cart_list)
         self.cart_list = {}
-        self.dialog = ShowDialog("information", "Thanks for buying")
-
+        self.dialog = ShowDialog("information", f"Thanks for buying the total prices: {total_price}")
 
     def load_history(self):
         self.central_widget = self.main_view.centralWidget()
         self.listRecordProduct = self.cart_model.get_records_items()
         listSize = len(self.listRecordProduct)
-        print(self.listRecordProduct)
         self.central_widget.get_history_table().setRowCount(listSize)
         index = 0
-        print(self.listRecordProduct)
         for item in self.listRecordProduct:
             self.central_widget.get_history_table().setItem(index, 0, QTableWidgetItem(item["name"]))
             self.central_widget.get_history_table().setItem(index, 1, QTableWidgetItem(str(item["price"])))
