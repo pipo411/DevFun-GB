@@ -17,6 +17,9 @@ Delete Product
 Shopping
 ![alt text](src/images/shopping_cart.png)
 
+Records
+![alt text](src/images/save.png)
+
 Review Historial
 ![alt text](src/images/history.png)
 
