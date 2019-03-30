@@ -30,5 +30,4 @@ class database_manager_test(unittest.TestCase):
         dictionary = test_db_manager.get_items_as_dictionary()
         dic = dictionary["sprite"].get_id()
         test_db_manager.update_item_description(dic, name="sprite2")
-
         self.assertEqual("sprite2", dictionary["sprite2"].get_name())
