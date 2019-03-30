@@ -115,7 +115,7 @@ class CartController:
             index += 1
 
         self.cart_model.buy(self.cart_list)
-        self.cart_model.save_sell(self.cart_list)
+        self.cart_model.save_records(self.cart_list)
         self.cart_list = {}
         self.dialog = ShowDialog("information", "Thanks for buying")
 
