@@ -118,6 +118,6 @@ class DatabaseManager:
 # oreo = Item("oreo", 17.5, 9)
 # db.insert_element_records(oreo)
 # print(db.get_records_as_list())
-# db.delete_element(id)
+# db.delete_element(1)
 # db.insert_element_records(oreo)
 # print(db.get_records_as_list())
