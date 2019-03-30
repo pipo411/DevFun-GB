@@ -1,3 +1,6 @@
+"""
+This class makes the connection to the database.
+"""
 import os
 import sqlite3
 
@@ -10,6 +13,12 @@ class DatabaseConnection:
         self.exist = os.path.exists(self.db_file_path)
 
     def get_database(self):
+        """
+        This method obtained the connection to the database and tables are created.
+        Returns db connection.
+
+        :return:
+        """
         connection = sqlite3.connect(self.db_file_path)
         if not self.exist:
             print("A DB was successfully")

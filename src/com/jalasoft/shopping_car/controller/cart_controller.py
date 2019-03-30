@@ -116,9 +116,7 @@ class CartController:
 
         self.cart_model.buy(self.cart_list)
         self.cart_model.save_records(self.cart_list)
-        print(self.cart_list)
         total_price = self.cart_model.get_total_price(self.cart_list)
-        print(total_price)
         self.cart_list = {}
         self.dialog = ShowDialog("information", f"Thanks for buying the total prices: {total_price}")
 
